@@ -145,6 +145,9 @@
       ]
     },
     "spacing": {
+      "padding": true,
+      "margin": true,
+      "blockGap": true,
       "units": ["px", "em", "rem", "vh", "vw", "%"],
       "spacingSizes": [
         {

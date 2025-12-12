@@ -137,3 +137,55 @@ function voidraider_excerpt_more( $more ) {
     return '...';
 }
 add_filter( 'excerpt_more', 'voidraider_excerpt_more' );
+
+/**
+ * Register custom post type: Runs
+ */
+function voidraider_register_runs_post_type() {
+    $labels = array(
+        'name'                  => _x( 'Runs', 'Post type general name', 'voidraider' ),
+        'singular_name'         => _x( 'Run', 'Post type singular name', 'voidraider' ),
+        'menu_name'             => _x( 'Runs', 'Admin Menu text', 'voidraider' ),
+        'name_admin_bar'        => _x( 'Run', 'Add New on Toolbar', 'voidraider' ),
+        'add_new'               => __( 'Add New', 'voidraider' ),
+        'add_new_item'          => __( 'Add New Run', 'voidraider' ),
+        'new_item'              => __( 'New Run', 'voidraider' ),
+        'edit_item'             => __( 'Edit Run', 'voidraider' ),
+        'view_item'             => __( 'View Run', 'voidraider' ),
+        'all_items'             => __( 'All Runs', 'voidraider' ),
+        'search_items'          => __( 'Search Runs', 'voidraider' ),
+        'parent_item_colon'     => __( 'Parent Runs:', 'voidraider' ),
+        'not_found'             => __( 'No runs found.', 'voidraider' ),
+        'not_found_in_trash'    => __( 'No runs found in Trash.', 'voidraider' ),
+        'featured_image'        => _x( 'Run Cover Image', 'Overrides the "Featured Image" phrase', 'voidraider' ),
+        'set_featured_image'    => _x( 'Set cover image', 'Overrides the "Set featured image" phrase', 'voidraider' ),
+        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the "Remove featured image" phrase', 'voidraider' ),
+        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the "Use as featured image" phrase', 'voidraider' ),
+        'archives'              => _x( 'Run archives', 'The post type archive label used in nav menus', 'voidraider' ),
+        'insert_into_item'      => _x( 'Insert into run', 'Overrides the "Insert into post" phrase', 'voidraider' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this run', 'Overrides the "Uploaded to this post" phrase', 'voidraider' ),
+        'filter_items_list'     => _x( 'Filter runs list', 'Screen reader text for the filter links', 'voidraider' ),
+        'items_list_navigation' => _x( 'Runs list navigation', 'Screen reader text for the pagination', 'voidraider' ),
+        'items_list'            => _x( 'Runs list', 'Screen reader text for the items list', 'voidraider' ),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'runs' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 5,
+        'menu_icon'          => 'dashicons-games',
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
+        'show_in_rest'       => true,
+    );
+
+    register_post_type( 'run', $args );
+}
+add_action( 'init', 'voidraider_register_runs_post_type' );
