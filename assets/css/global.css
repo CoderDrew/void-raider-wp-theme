@@ -130,6 +130,20 @@ select {
   font-family: var(--font-mono);
 }
 
+.wp-block-post-author__name {
+  font-family: var(--font-mono);
+}
+
+/* Separator */
+hr.separator,
+.separator {
+  width: 100% !important;
+  height: 1px;
+  background-color: var(--muted);
+  border: none;
+  margin: 2rem 0;
+}
+
 /* Card Styles */
 .card {
   background-color: var(--card);
@@ -354,10 +368,28 @@ select:focus {
   padding: 0.5rem 1.5rem;
   transition: color 0.2s ease;
   display: block;
+  position: relative;
+}
+
+.wp-block-navigation-item__content::after {
+  content: '';
+  position: absolute;
+  bottom: 0.25rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .wp-block-navigation-item__content:hover {
   color: var(--primary) !important;
+}
+
+.wp-block-navigation-item__content:hover::after {
+  transform: scaleX(1);
 }
 
 /* Pipe separators between nav items */
@@ -662,6 +694,336 @@ color: var(--accent);
 
   .mission-metadata {
     gap: 1rem !important;
+  }
+}
+
+/* === RAID ARCHIVE STYLES === */
+
+/* Raid archive list items */
+.wp-block-post-template li.raid {
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.wp-block-post-template li.raid:hover {
+  transform: scale(1.05);
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(200, 255, 0, 0.2);
+}
+
+/* === SINGLE BLOG POST STYLES === */
+
+/* Single post container */
+.single-post {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Back to archive link */
+.back-to-archive {
+  margin-bottom: 2rem;
+}
+
+.back-to-archive a {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.back-to-archive a:hover {
+  color: var(--primary);
+}
+
+/* Post layout - two column */
+.single-post-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* Main content column */
+.single-post-content {
+  flex: 1 1 66.66%;
+  min-width: 0;
+}
+
+/* Post category badge */
+.post-category-badge {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--background);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  margin-bottom: 1rem;
+}
+
+/* Post title */
+.single-post .wp-block-post-title {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-family: var(--font-headline);
+  color: var(--accent);
+}
+
+/* Post meta */
+.post-meta {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.post-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Post content typography */
+.single-post .wp-block-post-content h2 {
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-headline);
+}
+
+.single-post .wp-block-post-content h3 {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-headline);
+}
+
+.single-post .wp-block-post-content p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+/* Blockquotes */
+.single-post .wp-block-post-content blockquote {
+  background-color: rgba(0, 212, 255, 0.05);
+  border-left: 3px solid var(--secondary);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--foreground);
+}
+
+.single-post .wp-block-post-content blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.single-post .wp-block-post-content blockquote cite {
+  font-style: normal;
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Lists */
+.single-post .wp-block-post-content ul,
+.single-post .wp-block-post-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.single-post .wp-block-post-content li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+/* Featured image */
+.single-post .wp-block-post-featured-image {
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.single-post .wp-block-post-featured-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Post tags */
+.single-post .wp-block-post-terms {
+  margin-top: 3rem;
+}
+
+.single-post .wp-block-post-terms a {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--secondary);
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s ease;
+  font-family: var(--font-mono);
+}
+
+.single-post .wp-block-post-terms a:hover {
+  background-color: rgba(0, 212, 255, 0.15);
+}
+
+/* Sidebar */
+.single-post-sidebar {
+  flex: 0 0 33.33%;
+  min-width: 280px;
+  position: sticky;
+  top: 2rem;
+}
+
+/* Sidebar sections */
+.sidebar-section {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar-section h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  font-family: var(--font-headline);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* On this post navigation */
+.on-this-post ul {
+  list-style: none;
+  padding: 0;
+}
+
+.on-this-post li {
+  margin-bottom: 0.75rem;
+}
+
+.on-this-post a {
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.on-this-post a:hover {
+  color: var(--primary);
+}
+
+/* Recent posts list */
+.recent-posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-posts-list li {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.recent-posts-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.recent-posts-list a {
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+  display: block;
+}
+
+.recent-posts-list a:hover {
+  color: var(--secondary);
+}
+
+/* Call to action box */
+.cta-box {
+  background: linear-gradient(135deg, rgba(200, 255, 0, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+  border: 1px solid var(--primary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.cta-box h3 {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-family: var(--font-headline);
+}
+
+.cta-box p {
+  font-size: 0.875rem;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 255, 0, 0.3);
+}
+
+/* Responsive design for single posts */
+@media (max-width: 1024px) {
+  .single-post-layout {
+    flex-direction: column;
+  }
+
+  .single-post-content,
+  .single-post-sidebar {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .single-post-sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .single-post .wp-block-post-title {
+    font-size: 2rem;
   }
 }
 
