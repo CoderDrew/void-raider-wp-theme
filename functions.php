@@ -192,11 +192,258 @@ function voidraider_register_raids_post_type()
         'menu_icon'          => 'dashicons-games',
         'supports'           => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
         'show_in_rest'       => true,
+        'taxonomies'         => array('category', 'post_tag'),
     );
 
     register_post_type('raid', $args);
 }
 add_action('init', 'voidraider_register_raids_post_type');
+
+/**
+ * Register custom taxonomies for Raids
+ */
+function voidraider_register_raid_taxonomies()
+{
+    // Difficulty Taxonomy
+    register_taxonomy('difficulty', 'raid', array(
+        'labels' => array(
+            'name'              => __('Difficulties', 'voidraider'),
+            'singular_name'     => __('Difficulty', 'voidraider'),
+            'search_items'      => __('Search Difficulties', 'voidraider'),
+            'all_items'         => __('All Difficulties', 'voidraider'),
+            'parent_item'       => __('Parent Difficulty', 'voidraider'),
+            'parent_item_colon' => __('Parent Difficulty:', 'voidraider'),
+            'edit_item'         => __('Edit Difficulty', 'voidraider'),
+            'update_item'       => __('Update Difficulty', 'voidraider'),
+            'add_new_item'      => __('Add New Difficulty', 'voidraider'),
+            'new_item_name'     => __('New Difficulty Name', 'voidraider'),
+            'menu_name'         => __('Difficulty', 'voidraider'),
+        ),
+        'public'            => true,
+        'hierarchical'      => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'difficulty'),
+        'show_in_rest'      => true,
+    ));
+
+    // Raid Type Taxonomy (for categorizing raids by type)
+    register_taxonomy('raid_faction', 'raid', array(
+        'labels' => array(
+            'name'              => __('Raid Types', 'voidraider'),
+            'singular_name'     => __('Raid Type', 'voidraider'),
+            'search_items'      => __('Search Raid Types', 'voidraider'),
+            'all_items'         => __('All Raid Types', 'voidraider'),
+            'parent_item'       => __('Parent Raid Type', 'voidraider'),
+            'parent_item_colon' => __('Parent Raid Type:', 'voidraider'),
+            'edit_item'         => __('Edit Raid Type', 'voidraider'),
+            'update_item'       => __('Update Raid Type', 'voidraider'),
+            'add_new_item'      => __('Add New Raid Type', 'voidraider'),
+            'new_item_name'     => __('New Raid Type Name', 'voidraider'),
+            'menu_name'         => __('Raid Types', 'voidraider'),
+        ),
+        'public'            => true,
+        'hierarchical'      => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'raid-type'),
+        'show_in_rest'      => true,
+    ));
+}
+add_action('init', 'voidraider_register_raid_taxonomies');
+
+/**
+ * Register custom meta fields for Raids
+ */
+function voidraider_register_raid_meta()
+{
+    $common_args = [
+        'single'        => true,
+        'show_in_rest'  => true,
+        'auth_callback' => function () {
+            return current_user_can('edit_posts');
+        },
+    ];
+
+    // Duration (in hours)
+    register_post_meta('raid', 'raid_duration', [
+        ...$common_args,
+        'type'    => 'string',
+        'default' => '6-8 hours',
+    ]);
+
+    // Crew Size
+    register_post_meta('raid', 'raid_crew_size', [
+        ...$common_args,
+        'type'    => 'string',
+        'default' => '1-5 Raiders',
+    ]);
+
+    // Success Rate (percentage)
+    register_post_meta('raid', 'raid_success_rate', [
+        ...$common_args,
+        'type'    => 'string',
+        'default' => '50%',
+    ]);
+
+    // Rewards (text field for list)
+    register_post_meta('raid', 'raid_rewards', [
+        ...$common_args,
+        'type'    => 'string',
+        'default' => '',
+    ]);
+
+    // Void Warning Text
+    register_post_meta('raid', 'raid_void_warning', [
+        ...$common_args,
+        'type'    => 'string',
+        'default' => 'This run involves reality distortion and temporal anomalies. Psychological screening required.',
+    ]);
+}
+add_action('init', 'voidraider_register_raid_meta');
+
+/**
+ * Add Raid Details meta box
+ */
+add_action('add_meta_boxes', function () {
+    add_meta_box(
+        'voidraider_raid_details',
+        __('Raid Details', 'voidraider'),
+        'voidraider_render_raid_metabox',
+        'raid',
+        'normal',
+        'high'
+    );
+});
+
+function voidraider_render_raid_metabox($post)
+{
+    wp_nonce_field('voidraider_raid_save', 'voidraider_raid_nonce');
+
+    $raid_duration = get_post_meta($post->ID, 'raid_duration', true) ?: '6-8 hours';
+    $raid_crew_size = get_post_meta($post->ID, 'raid_crew_size', true) ?: '1-5 Raiders';
+    $raid_success_rate = get_post_meta($post->ID, 'raid_success_rate', true) ?: '50%';
+    $raid_rewards = get_post_meta($post->ID, 'raid_rewards', true);
+    $raid_void_warning = get_post_meta($post->ID, 'raid_void_warning', true) ?: 'This run involves reality distortion and temporal anomalies. Psychological screening required.';
+?>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+            <p>
+                <label for="raid_duration"><strong><?php esc_html_e('Duration', 'voidraider'); ?></strong></label><br />
+                <input
+                    type="text"
+                    id="raid_duration"
+                    name="raid_duration"
+                    value="<?php echo esc_attr($raid_duration); ?>"
+                    placeholder="e.g., 6-8 hours"
+                    style="width:100%;" />
+                <small style="color:#666;">How long the raid takes (e.g., "6-8 hours", "2-3 hours")</small>
+            </p>
+        </div>
+
+        <div>
+            <label for="raid_crew_size"><strong><?php esc_html_e('Crew Size', 'voidraider'); ?></strong></label><br />
+            <input
+                type="text"
+                id="raid_crew_size"
+                name="raid_crew_size"
+                value="<?php echo esc_attr($raid_crew_size); ?>"
+                placeholder="e.g., 1-5 Raiders"
+                style="width:100%;" />
+            <small style="color:#666;">Recommended crew size (e.g., "1-5 Raiders", "Solo")</small>
+        </div>
+    </div>
+
+    <p>
+        <label for="raid_success_rate"><strong><?php esc_html_e('Success Rate', 'voidraider'); ?></strong></label><br />
+        <input
+            type="text"
+            id="raid_success_rate"
+            name="raid_success_rate"
+            value="<?php echo esc_attr($raid_success_rate); ?>"
+            placeholder="e.g., 50%"
+            style="width:300px;" />
+        <small style="color:#666;">Percentage of successful raids (e.g., "15%", "75%")</small>
+    </p>
+
+    <p>
+        <label for="raid_rewards"><strong><?php esc_html_e('Potential Rewards', 'voidraider'); ?></strong></label><br />
+        <textarea
+            id="raid_rewards"
+            name="raid_rewards"
+            rows="5"
+            style="width:100%;"
+            placeholder="Enter one reward per line, e.g.:&#10;Glitch-core fragment&#10;Syndicate standing +2&#10;Rare tech salvage&#10;15,000 credits"><?php echo esc_textarea($raid_rewards); ?></textarea>
+        <small style="color:#666;">Enter one reward per line</small>
+    </p>
+
+    <p>
+        <label for="raid_void_warning"><strong><?php esc_html_e('Void Warning Text', 'voidraider'); ?></strong></label><br />
+        <textarea
+            id="raid_void_warning"
+            name="raid_void_warning"
+            rows="3"
+            style="width:100%;"><?php echo esc_textarea($raid_void_warning); ?></textarea>
+        <small style="color:#666;">Warning message about the raid dangers</small>
+    </p>
+
+<?php
+}
+
+add_action('save_post_raid', function ($post_id) {
+
+    if (
+        !isset($_POST['voidraider_raid_nonce']) ||
+        !wp_verify_nonce($_POST['voidraider_raid_nonce'], 'voidraider_raid_save')
+    ) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $raid_duration = isset($_POST['raid_duration'])
+        ? sanitize_text_field($_POST['raid_duration'])
+        : '6-8 hours';
+
+    $raid_crew_size = isset($_POST['raid_crew_size'])
+        ? sanitize_text_field($_POST['raid_crew_size'])
+        : '1-5 Raiders';
+
+    $raid_success_rate = isset($_POST['raid_success_rate'])
+        ? sanitize_text_field($_POST['raid_success_rate'])
+        : '50%';
+
+    $raid_rewards = isset($_POST['raid_rewards'])
+        ? sanitize_textarea_field($_POST['raid_rewards'])
+        : '';
+
+    $raid_void_warning = isset($_POST['raid_void_warning'])
+        ? sanitize_textarea_field($_POST['raid_void_warning'])
+        : 'This run involves reality distortion and temporal anomalies. Psychological screening required.';
+
+    update_post_meta($post_id, 'raid_duration', $raid_duration);
+    update_post_meta($post_id, 'raid_crew_size', $raid_crew_size);
+    update_post_meta($post_id, 'raid_success_rate', $raid_success_rate);
+    update_post_meta($post_id, 'raid_rewards', $raid_rewards);
+    update_post_meta($post_id, 'raid_void_warning', $raid_void_warning);
+});
+
+/**
+ * Force use of PHP template for raid post type
+ */
+add_filter('template_include', function ($template) {
+    if (is_singular('raid')) {
+        $php_template = get_template_directory() . '/single-raid.php';
+        if (file_exists($php_template)) {
+            return $php_template;
+        }
+    }
+    return $template;
+}, 99);
 
 /**
  * Register custom post type: Factions

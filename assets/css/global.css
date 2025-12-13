@@ -409,7 +409,7 @@ select:focus {
 }
 
 /* Animated underline */
-.wp-block-post-excerpt__more-link::after {
+.v-blog-post .wp-block-post-excerpt__more-link::after {
   content: "";
   position: absolute;
   left: 0;
@@ -424,7 +424,7 @@ select:focus {
 }
 
 /* Hover state */
-.wp-block-post-excerpt__more-link:hover::after {
+.v-blog-post .wp-block-post-excerpt__more-link:hover::after {
   transform: scaleX(1);
 }
 
@@ -446,6 +446,224 @@ select:focus {
 
 
 
+
+
+/* === SINGLE RAID POST TEMPLATE STYLES === */
+
+/* Back to Home Link */
+.back-to-home a {
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.back-to-home a:hover {
+  color: var(--primary);
+}
+
+/* Raid Title */
+.raid-title {
+color: var(--accent);
+  background-clip: text;
+}
+
+/* All h2 and h3 elements in single raid template */
+.single-raid h2,
+.single-raid h3 {
+  color: var(--secondary);
+}
+
+/* Raid Category Badge */
+.raid-category-badge a {
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Mission Metadata */
+.mission-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.meta-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+}
+
+.meta-value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Section Titles */
+.section-title {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary);
+}
+
+/* Complications Box */
+.complications-box {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.complications-box ul {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+}
+
+.complications-box ul li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+/* Raid Quote */
+.raid-quote {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.raid-quote p {
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.raid-quote cite {
+  font-style: normal;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* Run Statistics Sidebar */
+.run-statistics {
+  position: sticky;
+  top: 2rem;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-weight: 600;
+}
+
+.rewards-list {
+  padding-left: 1.25rem;
+}
+
+.rewards-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Void Warning Box */
+.void-warning {
+  text-align: center;
+}
+
+.warning-text {
+  margin-bottom: 0.5rem;
+}
+
+/* Related Runs Grid */
+.related-runs-grid {
+  margin-bottom: 3rem;
+}
+
+.related-run-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.related-run-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 212, 255, 0.2);
+}
+
+.related-run-badge a {
+  background-color: rgba(200, 255, 0, 0.1);
+  color: var(--primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Raid Tags */
+.raid-tags {
+  margin-top: 2rem;
+}
+
+.raid-tags a {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--secondary);
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.raid-tags a:hover {
+  background-color: rgba(0, 212, 255, 0.15);
+}
+
+/* Responsive Design for Single Raid */
+@media (max-width: 1024px) {
+  .wp-block-columns {
+    flex-direction: column !important;
+  }
+
+  .wp-block-column {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+
+  .run-statistics {
+    position: relative !important;
+    top: 0 !important;
+    margin-top: 2rem;
+  }
+
+  .raid-title {
+    font-size: 2rem !important;
+  }
+
+  .mission-metadata {
+    gap: 1rem !important;
+  }
+}
 
 
 /* === FOOTER STYLES === */
