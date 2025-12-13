@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "voidraider/download-grid",
+  "title": "Download Grid",
+  "category": "widgets",
+  "icon": "download",
+  "description": "Display a grid of download cards",
+  "keywords": ["download", "grid", "files"],
+  "attributes": {
+    "postsToShow": {
+      "type": "number",
+      "default": 4
+    },
+    "showAlphaNotice": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

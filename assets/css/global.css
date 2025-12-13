@@ -383,7 +383,79 @@ select:focus {
 .void-blue {color: var(--secondary)}
 .void-gray {color: var(--muted-foreground)}
 
+.vr-section-title {
+  position: relative;
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.vr-section-title::after {
+  content: "";
+  display: block;
+  width: 128px;
+  height: 4px;
+  margin: 1rem auto 0;
+  background-color: var(--primary);
+}
+
+.wp-block-query .wp-block-post-excerpt__more-link {
+  font-family: var(--font-mono);
+  text-decoration: none;
+}
+
+.wp-block-post-excerpt__more-link {
+  position: relative;
+  text-decoration: none; /* already removed, keeping explicit */
+}
+
+/* Animated underline */
+.wp-block-post-excerpt__more-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px; /* adjust spacing from text */
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease-in-out;
+}
+
+/* Hover state */
+.wp-block-post-excerpt__more-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* TERMS STYLING */
+
+.wp-block-post-terms {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--secondary);
+}
+
+.wp-block-post-terms a{
+  background-color: #0a0a0f;
+  padding: 5px 10px;
+  border: var(--muted) 1px solid;
+  border-radius: 3px;
+}
+
+
+
+
+
 /* === FOOTER STYLES === */
+
+/* Footer container */
+footer {
+  border-top: 2px solid var(--accent);
+  margin-top: 4rem;
+  padding-top: 3rem;
+}
 
 /* Footer page list */
 footer .wp-block-page-list,

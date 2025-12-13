@@ -308,6 +308,11 @@
       "name": "front-page",
       "title": "Front Page",
       "postTypes": ["page"]
+    },
+    {
+      "name": "data-dump",
+      "title": "Data Dump",
+      "postTypes": ["page"]
     }
   ]
 }
