@@ -22,7 +22,7 @@
 
                 <!-- wp:post-title {"textAlign":"left","isLink":true,"style":{"typography":{"fontSize":"1.5rem","fontWeight":"700","fontStyle":"normal"}},"textColor":"foreground","fontFamily":"headline"} /-->
 
-                <!-- wp:post-excerpt {"moreText":"Read More","textColor":"muted-foreground","fontFamily":"body"} /-->
+                <!-- wp:post-excerpt {"textColor":"muted-foreground","fontFamily":"body"} /-->
             </div>
             <!-- /wp:group -->
             <!-- /wp:post-template -->
