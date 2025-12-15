@@ -212,7 +212,6 @@ button {
   padding: 0.625rem 1.25rem;
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
-  border: none;
   border-radius: var(--radius);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
@@ -223,6 +222,30 @@ button {
 .button:hover,
 .wp-block-button__link:hover {
   opacity: 0.9;
+}
+
+/* Fix for WordPress core .has-border-color utility interfering with buttons */
+.wp-block-button__link.has-border-color {
+  border-style: solid;
+}
+
+/* Prevent .has-border-color from setting text color on buttons - let color classes work properly */
+.wp-block-button .wp-block-button__link.has-border-color,
+.wp-block-button__link.has-border-color {
+  color: unset !important;
+}
+
+/* Restore color for buttons with explicit color classes */
+.wp-block-button__link.has-secondary-color.has-border-color {
+  color: var(--wp--preset--color--secondary) !important;
+}
+
+.wp-block-button__link.has-primary-color.has-border-color {
+  color: var(--wp--preset--color--primary) !important;
+}
+
+.wp-block-button__link.has-accent-color.has-border-color {
+  color: var(--wp--preset--color--accent) !important;
 }
 
 /* === Inputs === */
